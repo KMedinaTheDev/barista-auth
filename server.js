@@ -16,6 +16,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
+
 var db
 
 // configuration ===============================================================
@@ -28,7 +29,7 @@ mongoose.connect(configDB.url, { useMongoClient: true }, (err, database) => {
 
 
 require('./config/passport')(passport); // pass passport for configuration
-
+// require('./config/seed'); //used to seed adminUser
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)

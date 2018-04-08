@@ -24,6 +24,17 @@ module.exports = function(app, passport, db) {
         res.redirect('/');
     });
 
+    // react routes ================================================================
+
+      // MAIN TEST ROUTE
+      app.get('/api/orders', function(req, res) {
+        db.collection('orders').find().toArray((err, result) => {
+          console.log(result)
+          if (err) return console.log(err)
+          res.json(result)
+        })
+      });
+
 // message board routes ===============================================================
 
 app.post('/orders', (req, res) => {
@@ -81,6 +92,11 @@ app.delete('/orders', (req, res) => {
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
+        app.post('/admin/login', passport.authenticate('admin', {
+            successRedirect : '/adminProfile', // redirect to the secure profile section
+            failureRedirect : '/admin/login', // redirect back to the signup page if there is an error
+            failureFlash : true // allow flash messages
+        }));
 
         // SIGNUP =================================
         // show the signup form
@@ -94,7 +110,7 @@ app.delete('/orders', (req, res) => {
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
-      
+
 
 // =============================================================================
 // UNLINK ACCOUNTS =============================================================
